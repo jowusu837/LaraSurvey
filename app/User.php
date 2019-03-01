@@ -2,10 +2,14 @@
 
 namespace App;
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
+/**
+ * @property Collection surveys
+ */
 class User extends Authenticatable
 {
     use Notifiable;
@@ -36,4 +40,13 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+
+    /**
+     * Get all the surveys this user has
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function surveys() {
+        return $this->hasMany(Survey::class);
+    }
 }

@@ -15,7 +15,7 @@
                                 <div class="form-group">
                                     <label for="surveyLink">Share this link to start getting some feedback immediately.</label>
                                     <div class="input-group">
-                                        <input id="surveyLink" type="url" class="form-control" value="{{ route('complete-survey', $survey->id) }}" readonly/>
+                                        <input id="surveyLink" type="url" class="form-control" value="{{ route('complete-survey.view', $survey->id) }}" readonly/>
                                         <div class="input-group-append">
                                             <button class="btn btn-outline-secondary" type="button" id="button-addon2">Copy</button>
                                         </div>

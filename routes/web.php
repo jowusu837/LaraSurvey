@@ -16,9 +16,10 @@ use Illuminate\Support\Facades\Route;
 
 Route::view('/', 'welcome');
 
-Route::name('complete-survey')->group(function () {
-    Route::get('complete-survey/{survey}', 'CompleteSurveyController@view');
-    Route::post('complete-survey/{survey}', 'CompleteSurveyController@submit');
+Route::name('complete-survey.')->prefix('complete-survey')->group(function () {
+    Route::get('/done', 'CompleteSurveyController@done')->name('done');
+    Route::get('/{survey}', 'CompleteSurveyController@view')->name('view');
+    Route::post('/{survey}', 'CompleteSurveyController@submit')->name('submit');
 });
 
 Route::middleware(['auth'])->group(function () {

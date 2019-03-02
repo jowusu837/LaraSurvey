@@ -18,7 +18,7 @@ abstract class TestCase extends BaseTestCase
      * Our test user
      * @var User
      */
-    private $user;
+    protected $user;
 
 
     protected function setUp(): void

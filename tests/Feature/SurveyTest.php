@@ -2,6 +2,8 @@
 
 namespace Tests\Feature;
 
+use App\Survey;
+use Laravel\Passport\Passport;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -61,5 +63,22 @@ class SurveyTest extends TestCase
             ->assertSuccessful()
             ->assertViewIs('surveys.show')
             ->assertSee($survey->title);
+    }
+
+
+    /**
+     * This tests the json api for creating a survey. This api is used by the react application that renders on the page.
+     * @return void
+     */
+    public function testApiForCreatingSurvey()
+    {
+        $payload = factory(Survey::class)->make()->toArray();
+
+        // Let's authenticate with Passport
+        Passport::actingAs($this->user);
+
+        $this->postJson(route('surveys.store'), $payload)
+            ->assertStatus(201)
+            ->assertJsonFragment($payload);
     }
 }

@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int user_id
  * @property mixed id
  * @property Collection responses
+ * @property Collection questions
  */
 class Survey extends Model
 {

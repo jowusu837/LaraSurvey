@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Question extends Model
 {
+    protected $fillable = ['question', 'type', 'options'];
+
     /**
      * Get the survey this question belongs to
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

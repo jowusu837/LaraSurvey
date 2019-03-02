@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
 import {QuestionFormModal} from "./QuestionFormModal";
+import axios from "axios";
 
 export class CreateSurvey extends Component {
     constructor(props) {
@@ -18,13 +19,14 @@ export class CreateSurvey extends Component {
     render() {
         return (
             <React.Fragment>
-                <form className="py-4 py-lg-5">
+                <form className="py-4 py-lg-5" onSubmit={event => this.handleSubmit(event)}>
                     <div className="form-group">
                         <input type="text" className="form-control form-control-lg"
                                placeholder="Give your survey a title..."
                                value={this.state.title}
                                onChange={e => this.setState({title: e.target.value})}
                                ref={instance => this.titleField = instance}
+                               required={true}
                         />
                     </div>
                     <div className="py-3">
@@ -67,6 +69,13 @@ export class CreateSurvey extends Component {
         const questions = this.state.questions;
         questions.push(question);
         this.setState({questions});
+    }
+
+    handleSubmit(e) {
+        e.preventDefault();
+        axios.post('/api/surveys', this.state)
+            .then(res => console.log('Survey created!', res))
+            .catch(err => alert('Could not create survey!'));
     }
 }
 

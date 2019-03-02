@@ -4,8 +4,13 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @property int user_id
+ */
 class Survey extends Model
 {
+    protected $fillable = ['title'];
+
     /**
      * Get questions for this survey
      * @return \Illuminate\Database\Eloquent\Relations\HasMany

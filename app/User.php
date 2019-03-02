@@ -9,6 +9,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 /**
  * @property Collection surveys
+ * @property mixed id
  */
 class User extends Authenticatable
 {

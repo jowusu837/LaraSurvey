@@ -1,10 +1,11 @@
 <?php
 
+use App\Survey;
 use Faker\Generator as Faker;
 
-$factory->define(\App\Survey::class, function (Faker $faker) {
+$factory->define(Survey::class, function (Faker $faker) {
     return [
         'title' => $faker->text,
-        'is_published' => 0
+        'is_published' => 0,
     ];
 });

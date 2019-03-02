@@ -46,6 +46,15 @@ abstract class TestCase extends BaseTestCase
      */
     protected function createSurveysForUser($count = 1)
     {
-        return $this->user->surveys()->saveMany(factory(Survey::class, $count)->make());
+        // Create surveys
+        $surveys = $this->user->surveys()->saveMany(factory(Survey::class, $count)->make());
+
+        // Add 5 questions to each survey
+        $surveys->each(function ($survey) {
+            $survey->questions()->saveMany(factory(\App\Question::class, 5)->make());
+        });
+
+        // then return surveys
+        return $surveys;
     }
 }

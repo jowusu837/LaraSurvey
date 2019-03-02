@@ -14,9 +14,19 @@ class CompleteSurveyTest extends TestCase
      */
     public function testViewSurvey()
     {
-        $response = $this->get('/');
+        // Lets setup a survey
+        $survey = $this->createSurveysForUser(1)
+            ->first();
 
-        $response->assertStatus(200);
+        $response = $this->get(route('complete-survey.view', $survey->id))
+            ->assertSuccessful()
+            ->assertViewIs('complete-survey.view')
+            ->assertViewHas('survey', $survey);
+
+        // Then we want to be sure all our questions are displayed to the user
+        $survey->questions->each(function ($q) use ($response) {
+            $response->assertSee($q->question);
+        });
     }
 
     public function testCompleteAndSubmitSurvey()

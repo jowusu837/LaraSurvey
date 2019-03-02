@@ -54,3 +54,11 @@ if (token) {
 //     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
 //     encrypted: true
 // });
+
+/**
+ * Initialize bootstrap select
+ */
+window.$(document).ready(function() {
+    require('bootstrap-select/js/bootstrap-select');
+    window.$('select').selectpicker();
+});

@@ -37,10 +37,27 @@ class SurveyRepository
             $questions = collect($data['questions']);
 
             $survey->questions()->saveMany($questions->map(function ($q) {
-                return new Question($q);
+                return new Question(static::parseOptionsForQuestion($q));
             }));
         }
 
         return $survey;
+    }
+
+    /**
+     * Converts options string into an array
+     * @param array $q
+     * @return array
+     */
+    private static function parseOptionsForQuestion($q)
+    {
+        $options = collect(preg_split('/\r\n|\n|\r/', $q['options']));
+
+        $q['options'] =
+            $options
+                ->unique()
+                ->toArray();
+
+        return $q;
     }
 }

@@ -65,8 +65,8 @@ export class QuestionFormModal extends Component {
                                 >
                                     <option value={FREE_TEXT}>Free text</option>
                                     <option value={NUMBERS}>Numbers</option>
-                                    <option value={SINGLE_ANSWER}>Single answer</option>
-                                    <option value={MULTIPLE_ANSWER}>Multiple answers</option>
+                                    <option value={SINGLE_ANSWER}>Single choice</option>
+                                    <option value={MULTIPLE_ANSWER}>Multiple choices</option>
                                 </select>
                             </div>
 

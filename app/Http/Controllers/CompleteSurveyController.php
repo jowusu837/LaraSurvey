@@ -2,13 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Survey;
 use Illuminate\Http\Request;
 
 class CompleteSurveyController extends Controller
 {
-    public function view()
+    /**
+     * Complete a survey
+     * @param Survey $survey
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function view(Survey $survey)
     {
-        // TODO: Implement __invoke() method.
+        return view('complete-survey.view', compact('survey'));
     }
 
     public function submit() {

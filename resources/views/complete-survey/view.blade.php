@@ -9,42 +9,51 @@
                 <div class="card">
                     <div class="card-header">Please fill this survey</div>
                     <div class="card-body">
-                        <form action="{{ route('complete-survey.submit', $survey->id) }}" method="post">
-                            @csrf
-                            <input type="hidden" name="session_id" value="{{ $session_id }}">
-                            @foreach($survey->questions as $question)
-                                <div class="form-group mb-5">
-                                    <label for="{{ $question->id }}">{{ $question->question }}</label>
+                        @if(session(\App\Http\Controllers\CompleteSurveyController::COMPLETED_SURVEY_SESSION_KEY) == $survey->id)
+                            <div class="alert alert-info">
+                                You have already completed this survey!
+                            </div>
+                        @else
+                            <form action="{{ route('complete-survey.submit', $survey->id) }}" method="post">
+                                @csrf
+                                <input type="hidden" name="session_id" value="{{ $session_id }}">
+                                @foreach($survey->questions as $question)
+                                    <div class="form-group mb-5">
+                                        <label for="{{ $question->id }}">{{ $question->question }}</label>
 
-                                    @if($question->type == \App\Question::FREE_TEXT)
-                                        <input name="answers[{{ $question->id }}]" id="{{ $question->id }}" type="text"
-                                               class="form-control">
+                                        @if($question->type == \App\Question::FREE_TEXT)
+                                            <input name="answers[{{ $question->id }}]" id="{{ $question->id }}"
+                                                   type="text"
+                                                   class="form-control">
 
-                                    @elseif($question->type == \App\Question::NUMBERS)
-                                        <input name="answers[{{ $question->id }}]" id="{{ $question->id }}" type="number"
-                                               class="form-control">
+                                        @elseif($question->type == \App\Question::NUMBERS)
+                                            <input name="answers[{{ $question->id }}]" id="{{ $question->id }}"
+                                                   type="number"
+                                                   class="form-control">
 
-                                    @elseif($question->type == \App\Question::SINGLE_ANSWER)
-                                        <select name="answers[{{ $question->id }}]" id="{{ $question->id }}"
-                                                class="form-control">
-                                            @foreach($question->options as $opt)
-                                                <option>{{ $opt }}</option>
-                                            @endforeach
-                                        </select>
+                                        @elseif($question->type == \App\Question::SINGLE_ANSWER)
+                                            <select name="answers[{{ $question->id }}]" id="{{ $question->id }}"
+                                                    class="form-control">
+                                                @foreach($question->options as $opt)
+                                                    <option>{{ $opt }}</option>
+                                                @endforeach
+                                            </select>
 
-                                    @elseif($question->type == \App\Question::MULTIPLE_ANSWER)
-                                        <select name="answers[{{ $question->id }}]" id="{{ $question->id }}"
-                                                class="form-control multi-select" multiple data-live-search="true">
-                                            @foreach($question->options as $opt)
-                                                <option>{{ $opt }}</option>
-                                            @endforeach
-                                        </select>
-                                        <small class="form-text text-muted">You can pick more than one answer.</small>
-                                    @endif
-                                </div>
-                            @endforeach
-                            <button type="submit" class="btn btn-success">Submit</button>
-                        </form>
+                                        @elseif($question->type == \App\Question::MULTIPLE_ANSWER)
+                                            <select name="answers[{{ $question->id }}]" id="{{ $question->id }}"
+                                                    class="form-control multi-select" multiple data-live-search="true">
+                                                @foreach($question->options as $opt)
+                                                    <option>{{ $opt }}</option>
+                                                @endforeach
+                                            </select>
+                                            <small class="form-text text-muted">You can pick more than one answer.
+                                            </small>
+                                        @endif
+                                    </div>
+                                @endforeach
+                                <button type="submit" class="btn btn-success">Submit</button>
+                            </form>
+                        @endif
                     </div>
                 </div>
             </div>

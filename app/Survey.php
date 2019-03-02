@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * @property int user_id
+ * @property mixed id
  */
 class Survey extends Model
 {

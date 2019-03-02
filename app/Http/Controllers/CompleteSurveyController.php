@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 
 class CompleteSurveyController extends Controller
 {
+    const COMPLETED_SURVEY_SESSION_KEY = 'completed_survey';
+
     /**
      * Complete a survey
      * @param Request $request
@@ -23,13 +25,22 @@ class CompleteSurveyController extends Controller
     /**
      * Submit feedback for a survey
      * @param Request $request
+     * @param Survey $survey
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      * @throws \Throwable
      */
-    public function submit(Request $request)
+    public function submit(Request $request, Survey $survey)
     {
-        ResponseRepository::saveFormData($request->all());
-        return redirect(route('complete-survey.done'));
+        if($request->session()->get(static::COMPLETED_SURVEY_SESSION_KEY) != $survey->id) {
+            ResponseRepository::saveFormData($request->all());
+
+            // This will ensure the same survey isn't filled twice.
+            $request->session()->put(static::COMPLETED_SURVEY_SESSION_KEY, $survey->id);
+
+            return redirect(route('complete-survey.done'));
+        }
+
+        abort(404, 'You have already completed this survey!');
     }
 
     public function done()

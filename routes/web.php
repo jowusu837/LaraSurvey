@@ -14,13 +14,16 @@
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
+Route::view('/', 'welcome');
+
+Route::name('complete-survey')->group(function () {
+    Route::get('complete-survey/{survey}', 'CompleteSurveyController@view');
+    Route::post('complete-survey/{survey}', 'CompleteSurveyController@submit');
+});
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('home', 'HomeController@index')->name('home');
+    Route::resource('surveys', 'SurveysController')->except(['store']);
 });
 
 Auth::routes();
-
-Route::middleware(['auth'])->group(function () {
-    Route::get('/home', 'HomeController@index')->name('home');
-    Route::resource('surveys', 'SurveysController');
-});

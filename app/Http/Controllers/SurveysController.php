@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Repositories\SurveyRepository;
+use App\Survey;
 use Illuminate\Http\Request;
 
 class SurveysController extends Controller
@@ -30,25 +31,14 @@ class SurveysController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param Survey $survey
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Survey $survey)
     {
-        //
+        return view('surveys.show', compact('survey'));
     }
 
     /**

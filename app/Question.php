@@ -3,7 +3,11 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
+/**
+ * @property mixed id
+ */
 class Question extends Model
 {
     // Question type constants
@@ -35,5 +39,18 @@ class Question extends Model
     public function responses()
     {
         return $this->hasMany(Response::class);
+    }
+
+    /**
+     * Get answer stats for this question
+     * @return \Illuminate\Support\Collection
+     */
+    public function getResponseStatsAttribute()
+    {
+        return DB::table('responses')
+            ->selectRaw('answer, count(answer) as answer_count')
+            ->where('question_id', $this->id)
+            ->groupBy('answer')
+            ->get();
     }
 }

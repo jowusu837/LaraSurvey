@@ -2,51 +2,12 @@
 
 namespace Tests\Feature;
 
-use App\Survey;
-use App\User;
-use Illuminate\Database\Eloquent\Collection;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class SurveyTest extends TestCase
 {
-    use RefreshDatabase;
-
-    /**
-     * Our test user
-     * @var User
-     */
-    private $user;
-
-
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        // We will be authenticating as this user
-        $this->user = factory(User::class)->create();
-    }
-
-    /**
-     * This helper function helps us to be dry
-     * @return SurveyTest
-     */
-    private function actingAsUser(): SurveyTest
-    {
-        return $this->actingAs($this->user);
-    }
-
-    /**
-     * Create surveys for our test user
-     * @param int $count
-     * @return Collection|iterable
-     */
-    private function createSurveysForUser($count = 1)
-    {
-        return $this->user->surveys()->saveMany(factory(Survey::class, $count)->make());
-    }
-
     /**
      * This test is supposed to guarantee that when we create surveys,
      * they get parsed through the controller to the view.

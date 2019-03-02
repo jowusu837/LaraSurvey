@@ -2,29 +2,50 @@
 
 namespace Tests;
 
+use App\Survey;
+use App\User;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 use Illuminate\Foundation\Testing\TestResponse;
 use Illuminate\Support\Facades\Artisan;
 
 abstract class TestCase extends BaseTestCase
 {
-    use CreatesApplication;
+    use CreatesApplication, RefreshDatabase;
+
+    /**
+     * Our test user
+     * @var User
+     */
+    private $user;
+
 
     protected function setUp(): void
     {
         parent::setUp();
         Artisan::call('migrate');
+
+        // We will be authenticating as this user
+        $this->user = factory(User::class)->create();
     }
 
+    /**
+     * This helper function helps us to be dry
+     * @return TestCase
+     */
+    protected function actingAsUser(): TestCase
+    {
+        return $this->actingAs($this->user);
+    }
 
     /**
-     * @param TestResponse $response
-     * @param $key
-     * @return mixed
+     * Create surveys for our test user
+     * @param int $count
+     * @return Collection|iterable
      */
-    protected function getResponseData($response, $key){
-        $content = $response->getOriginalContent();
-        $content = $content->getData();
-        return $content[$key]->all();
+    protected function createSurveysForUser($count = 1)
+    {
+        return $this->user->surveys()->saveMany(factory(Survey::class, $count)->make());
     }
 }

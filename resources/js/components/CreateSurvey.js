@@ -74,7 +74,7 @@ export class CreateSurvey extends Component {
     handleSubmit(e) {
         e.preventDefault();
         axios.post('/api/surveys', this.state)
-            .then(res => console.log('Survey created!', res))
+            .then(res => window.location.assign(`/surveys/${res.data.data.id}`))
             .catch(err => alert('Could not create survey!'));
     }
 }

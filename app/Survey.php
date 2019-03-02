@@ -2,11 +2,13 @@
 
 namespace App;
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
 /**
  * @property int user_id
  * @property mixed id
+ * @property Collection responses
  */
 class Survey extends Model
 {
@@ -28,5 +30,13 @@ class Survey extends Model
     public function responses()
     {
         return $this->hasManyThrough(Response::class, Question::class);
+    }
+
+    /**
+     * Get unique responses based on session id
+     * @return Collection|\Illuminate\Support\Collection
+     */
+    public function getUniqueResponsesAttribute() {
+        return $this->responses->unique('session_id');
     }
 }

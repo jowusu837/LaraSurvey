@@ -23,7 +23,7 @@
                                         </td>
                                         <td class="text-right">
                                             <a href="{{ route('surveys.show', $survey->id) }}"
-                                               class="btn btn-sm btn-light">View results</a>
+                                               class="btn btn-sm btn-light"><b>{{$survey->unique_responses->count()}}</b> responses</a>
                                             {{--<a href="#" class="btn btn-sm btn-light">Edit</a>--}}
                                             {{--<a href="#" class="btn btn-sm btn-outline-success">Publish</a>--}}
                                             {{--<a href="#" class="btn btn-sm btn-outline-danger">Delete</a>--}}

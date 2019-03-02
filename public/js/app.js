@@ -65062,7 +65062,7 @@ function (_Component) {
     value: function handleSubmit(e) {
       e.preventDefault();
       axios__WEBPACK_IMPORTED_MODULE_3___default.a.post('/api/surveys', this.state).then(function (res) {
-        return console.log('Survey created!', res);
+        return window.location.assign("/surveys/".concat(res.data.data.id));
       }).catch(function (err) {
         return alert('Could not create survey!');
       });

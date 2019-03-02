@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use App\Survey;
 use App\User;
+use Illuminate\Database\Eloquent\Collection;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -37,6 +38,16 @@ class SurveyTest extends TestCase
     }
 
     /**
+     * Create surveys for our test user
+     * @param int $count
+     * @return Collection|iterable
+     */
+    private function createSurveysForUser($count = 1)
+    {
+        return $this->user->surveys()->saveMany(factory(Survey::class, $count)->make());
+    }
+
+    /**
      * This test is supposed to guarantee that when we create surveys,
      * they get parsed through the controller to the view.
      *
@@ -44,7 +55,7 @@ class SurveyTest extends TestCase
      */
     public function testListing()
     {
-        $surveys = $this->user->surveys()->saveMany(factory(Survey::class, 5)->make());
+        $surveys = $this->createSurveysForUser(5);
 
         $response = $this->actingAsUser()
             ->get(route('surveys.index'))
@@ -63,6 +74,8 @@ class SurveyTest extends TestCase
      * Since the actual creation happens via API, we'll not cover that here.
      *
      * Also, we want to ensure that our react application node is there.
+     *
+     * @return void
      */
     public function testCreate()
     {
@@ -71,5 +84,21 @@ class SurveyTest extends TestCase
             ->assertSuccessful()
             ->assertViewIs('surveys.create')
             ->assertSee('<div id="create-survey"></div>');
+    }
+
+    /**
+     * We want to ensure that when we select a survey from the listing page, we see a detail page for it.
+     * @return void
+     */
+    public function testShow()
+    {
+        $survey = $this->createSurveysForUser(1)
+            ->first();
+
+        $this->actingAsUser()
+            ->get(route('surveys.show', $survey->id))
+            ->assertSuccessful()
+            ->assertViewIs('surveys.show')
+            ->assertSee($survey->title);
     }
 }

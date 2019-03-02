@@ -16,7 +16,7 @@ Now, run ``php artisan passport:keys`` to initialize Passport.
 You should be good to go. Run ``php artisan serve`` to get the inbuilt web server started and enjoy!
 
 ## Testing
-This is the same as you have it in the Laravel docs. Like I said, the emphasis here is on sticking to best practices. Of course you should still look at the tests, I'm sure you will learn a thing or two there. To run the tests, run ``phpunit`` from your project root. For more information on testing (https://laravel.com/docs/5.8/testing)[checkout the Laravel docs]
+This is the same as you have it in the Laravel docs. Like I said, the emphasis here is on sticking to best practices. Of course you should still look at the tests, I'm sure you will learn a thing or two there. To run the tests, run ``phpunit`` from your project root. For more information on testing (checkout the laravel docs) [https://laravel.com/docs/5.8/testing]
 
 
 ## Contributing

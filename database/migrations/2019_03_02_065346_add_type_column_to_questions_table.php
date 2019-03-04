@@ -14,7 +14,7 @@ class AddTypeColumnToQuestionsTable extends Migration
     public function up()
     {
         Schema::table('questions', function (Blueprint $table) {
-            $table->string('type', 20);
+            $table->string('type', 20)->default(\App\Question::FREE_TEXT);
         });
     }
 
